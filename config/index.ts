@@ -1,6 +1,6 @@
 export const config = {
     database: {
-        dialect: process.env.DB_CONNECTION || 'postgres',
+        dialect: process.env.DB_CONNECTION,
         host: process.env.DB_HOST,
         port: +process.env.DB_PORT,
         username: process.env.DB_USER,
