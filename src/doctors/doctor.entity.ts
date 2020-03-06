@@ -7,7 +7,8 @@ import {
     Model,
     CreatedAt,
     UpdatedAt,
-    BelongsTo
+    BelongsTo,
+    ForeignKey
 } from 'sequelize-typescript';
 import { Hospital } from '../hospitals/hospital.entity';
 
@@ -19,6 +20,13 @@ export class Doctor extends Model<Doctor> {
     @AutoIncrement
     @Column(DataType.BIGINT)
     id: number;
+
+    @ForeignKey(() => Hospital)
+    @Column({
+        type: DataType.BIGINT,
+        field: 'hospital_id',
+    })
+    hospital_id: string;
 
     @Column
     name: string;

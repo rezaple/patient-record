@@ -31,6 +31,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Hospitals');
+    return queryInterface.dropTable('hospitals');
   }
 };

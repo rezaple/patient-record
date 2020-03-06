@@ -15,9 +15,13 @@ import { Doctor } from '../doctors/doctor.entity';
     tableName: 'hospitals',
 })
 export class Hospital extends Model<Hospital> {
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
+    @Column({
+        type: DataType.BIGINT,
+        allowNull: false,
+        autoIncrement: true,
+        unique: true,
+        primaryKey: true,
+    })
     id: number;
 
     @Column
@@ -39,5 +43,5 @@ export class Hospital extends Model<Hospital> {
     updatedAt: Date;
 
     @HasMany(() => Doctor)
-    posts: Doctor[];
+    doctors: Doctor[];
 }

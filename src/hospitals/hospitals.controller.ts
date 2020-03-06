@@ -9,14 +9,14 @@ import {
     Delete,
     Put,
 } from '@nestjs/common';
-import { CreateHospitalDto } from './dt./dto/create-hospital.dto';
+import { CreateHospitalDto } from './dto/create-hospital.dto';
 import { HospitalsService } from './hospitals.service';
 import { Hospital as HospitalEntity } from './hospital.entity';
 import { HospitalDto } from './dto/hospital.dto';
 import { Request } from 'express';
 import { UpdateHospitalDto } from './dto/update-hospital.dto';
 
-@Controller('Hospitals')
+@Controller('hospitals')
 export class HospitalsController {
     constructor(private readonly hospitalsService: HospitalsService) {}
 
@@ -26,16 +26,15 @@ export class HospitalsController {
     }
 
     @Get(':id')
-    findOne(@Param('id', new ParseIntPipe()) id: number): Promise<HospitalDto> {
+    findOne(@Param('id', new ParseIntPipe()) id: number): Promise<HospitalEntity> {
         return this.hospitalsService.findOne(id);
     }
 
     @Post()
     create(
         @Body() createPostDto: CreateHospitalDto,
-        @Req() request,
     ): Promise<HospitalEntity> {
-        return this.hospitalsService.create(request.user.id, createPostDto);
+        return this.hospitalsService.create(createPostDto);
     }
 
     @Put(':id')
@@ -44,14 +43,14 @@ export class HospitalsController {
         @Req() request: Request,
         @Body() updatePostDto: UpdateHospitalDto,
     ): Promise<HospitalEntity> {
-        return this.hospitalsService.update(id, request.user.id, updatePostDto);
+        return this.hospitalsService.update(id, updatePostDto);
     }
 
-    @Delete(':id')
-    delete(
-        @Param('id', new ParseIntPipe()) id: number,
-        @Req() request: Request,
-    ): Promise<HospitalEntity> {
-        return this.hospitalsService.delete(id, request.user.id);
-    }
+    // @Delete(':id')
+    // delete(
+    //     @Param('id', new ParseIntPipe()) id: number,
+    //     @Req() request: Request,
+    // ): Promise<HospitalEntity> {
+    //     return this.hospitalsService.delete(id, request.user.id);
+    // }
 }

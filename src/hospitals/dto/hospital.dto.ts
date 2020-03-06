@@ -4,13 +4,13 @@ export class HospitalDto {
     
     readonly id: number;
 
-    readonly name: string;
+    name: string;
     
-    readonly address: string;
+    address: string;
     
-    readonly lat: number;
+    lat: number;
 
-    readonly lng: number;
+    lng: number;
 
     readonly createdAt: Date;
 
