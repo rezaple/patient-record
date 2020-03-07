@@ -1,34 +1,26 @@
 import {
     Table,
-    PrimaryKey,
-    AutoIncrement,
     Column,
     DataType,
     Model,
     CreatedAt,
     UpdatedAt,
-    BelongsTo,
-    ForeignKey,
     HasMany
 } from 'sequelize-typescript';
-import { Hospital } from '../hospitals/hospital.entity';
 import { Record } from '../records/record.entity';
 
 @Table({
-    tableName: 'doctors',
+    tableName: 'patients',
 })
-export class Doctor extends Model<Doctor> {
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
-    id: number;
-
-    @ForeignKey(() => Hospital)
+export class Patient extends Model<Patient> {
     @Column({
         type: DataType.BIGINT,
-        field: 'hospital_id',
+        allowNull: false,
+        autoIncrement: true,
+        unique: true,
+        primaryKey: true,
     })
-    hospital_id: number;
+    id: number;
 
     @Column
     name: string;
@@ -41,9 +33,6 @@ export class Doctor extends Model<Doctor> {
 
     @UpdatedAt
     updatedAt: Date;
-
-    @BelongsTo(() => Hospital)
-    hospital: Hospital[];
 
     @HasMany(() => Record)
     records: Record[];

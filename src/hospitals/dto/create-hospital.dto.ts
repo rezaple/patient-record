@@ -1,17 +1,22 @@
 import { IsNotEmpty, IsLatitude, IsLongitude } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateHospitalDto {
+    @ApiProperty()
     @IsNotEmpty()
-    readonly name: string;
+    name: string;
 
+    @ApiProperty()
     @IsNotEmpty()
-    readonly address: string;
+    address: string;
 
+    @ApiProperty()
     @IsNotEmpty()
     @IsLatitude()
-    readonly lat: number;
+    lat: number;
 
+    @ApiProperty()
     @IsNotEmpty()
     @IsLongitude()
-    readonly lng: number;
+    lng: number;
 }

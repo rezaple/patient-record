@@ -4,19 +4,19 @@ import { CreateHospitalDto } from './dto/create-hospital.dto';
 import { UpdateHospitalDto } from './dto/update-hospital.dto';
 import { Hospital } from './hospital.entity';
 import { Doctor } from './../doctors/doctor.entity';
+import {HospitalArgs} from './dto/hospital-args.dto';
 
 @Injectable()
 export class HospitalsService {
   constructor(
     @Inject('HospitalsRepository') private readonly hospitalsRepository: typeof Hospital) {}
 
-    async findAll(): Promise<HospitalDto[]> {
-        const hospitals = await this.hospitalsRepository.findAll<Hospital>({
-            include: [Doctor],
-        });
-        return hospitals.map(host => {
-            return new HospitalDto(host);
-        });
+    async findAll(): Promise<Hospital[]> {
+        // const hospitals = await this.hospitalsRepository.findAll<Hospital>({
+        //     include: [Doctor],
+        // });
+        // return hospitals;
+        return await this.hospitalsRepository.findAll<Hospital>();
     }
 
     async findOne(id: number): Promise<Hospital> {
