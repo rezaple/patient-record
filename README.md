@@ -23,8 +23,8 @@ $ sequelize db:seed:all
 ## Running the app
 
 ```bash
-# development
-$ npm run start
+# development with nodemon
+$ npm run dev
 
 # watch mode
 $ npm run start:dev
