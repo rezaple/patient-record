@@ -34,7 +34,8 @@ const {database} = config;
       models: [Hospital, Doctor, User, Record, Patient],
     }),
     GraphQLModule.forRoot({
-      autoSchemaFile: true
+      autoSchemaFile: true,
+      context: ({ req }) => ({ req }),
     }),
     HospitalsModule, AuthModule, PatientsModule, UsersModule, DoctorsModule, RecordsModule],
   controllers: [AppController],

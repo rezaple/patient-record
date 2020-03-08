@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import Authenticate from '../utils/Authenticate';
 import { JwtService } from '@nestjs/jwt';
+import { UserDTO } from '../users/dto/user.dto';
+import { UserRO } from '../users/dto/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -11,18 +13,26 @@ export class AuthService {
         private readonly jwtService: JwtService
     ){}
 
-    async validateUser(email: string, password: string):Promise<any>{
+    async validateUser(data: UserDTO){
+        const { email, password } = data;
         const user = await this.usersService.findOne(email);
         const passwordInput = password;
-        if(user){
-            const isAuthenticate: boolean = await  Authenticate.comparePassword(passwordInput, user.password);
-            if(isAuthenticate){
-                const {password, ...result} = user;
-                return result;
-            }
+
+        if (!user || !(await Authenticate.comparePassword(passwordInput, user.password))) {
+            throw new UnauthorizedException();
         }
 
-        return false;
+        const responseObject: UserRO = {
+            id: user.id,
+            createdAt: user.createdAt,
+            email: user.email,
+          };
+      
+        responseObject.token = this.jwtService.sign({
+            id: user.id,
+            email: user.email,
+        });
+        return responseObject;
     }
 
     async login(user: any) {
