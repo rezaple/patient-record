@@ -1,7 +1,7 @@
 import { InputType, Field } from 'type-graphql';
 
 @InputType()
-export class HospitalInput {
+export class DoctorInput {
   @Field()
   readonly name: string;
   
@@ -9,8 +9,5 @@ export class HospitalInput {
   readonly address: string;
 
   @Field()
-  readonly lat: number;
-
-  @Field()
-  readonly lng: number;
+  readonly hospital_id: number;
 }

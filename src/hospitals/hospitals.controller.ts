@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateHospitalDto } from './dto/create-hospital.dto';
 import { HospitalsService } from './hospitals.service';
-import { Hospital as HospitalEntity } from './hospital.entity';
+import { Hospital } from './hospital.entity';
 import { HospitalDto } from './dto/hospital.dto';
 import { Request } from 'express';
 import { UpdateHospitalDto } from './dto/update-hospital.dto';
@@ -26,14 +26,14 @@ export class HospitalsController {
     }
 
     @Get(':id')
-    findOne(@Param('id', new ParseIntPipe()) id: number): Promise<HospitalEntity> {
+    findOne(@Param('id', new ParseIntPipe()) id: number): Promise<Hospital> {
         return this.hospitalsService.findOne(id);
     }
 
     @Post()
     create(
         @Body() createPostDto: CreateHospitalDto,
-    ): Promise<HospitalEntity> {
+    ): Promise<Hospital> {
         return this.hospitalsService.create(createPostDto);
     }
 
@@ -42,15 +42,14 @@ export class HospitalsController {
         @Param('id', new ParseIntPipe()) id: number,
         @Req() request: Request,
         @Body() updatePostDto: UpdateHospitalDto,
-    ): Promise<HospitalEntity> {
+    ): Promise<Hospital> {
         return this.hospitalsService.update(id, updatePostDto);
     }
 
-    // @Delete(':id')
-    // delete(
-    //     @Param('id', new ParseIntPipe()) id: number,
-    //     @Req() request: Request,
-    // ): Promise<HospitalEntity> {
-    //     return this.hospitalsService.delete(id, request.user.id);
-    // }
+    @Delete(':id')
+    delete(
+        @Param('id', new ParseIntPipe()) id: number,
+    ): Promise<Hospital> {
+        return this.hospitalsService.delete(id);
+    }
 }

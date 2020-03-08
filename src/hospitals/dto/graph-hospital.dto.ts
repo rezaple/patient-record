@@ -1,7 +1,17 @@
 import { Field, ObjectType, ID, Float } from 'type-graphql';
 
+
 @ObjectType()
-export class CreateGraphHospitalDto {
+export class Doctor {
+  @Field(() => ID)
+  id: number;
+
+  @Field({ nullable: true })
+  name?: string;
+}
+
+@ObjectType()
+export class GraphHospitalDto {
   @Field(() => ID)
   id: number;
 
@@ -16,5 +26,8 @@ export class CreateGraphHospitalDto {
 
   @Field({ nullable: true })
   lng?: number;
+
+  @Field(type => [Doctor])
+  doctors?: [Doctor];
 
 }

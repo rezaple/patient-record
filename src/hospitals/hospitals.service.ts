@@ -1,34 +1,34 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { HospitalDto } from './dto/hospital.dto';
 import { CreateHospitalDto } from './dto/create-hospital.dto';
 import { UpdateHospitalDto } from './dto/update-hospital.dto';
 import { Hospital } from './hospital.entity';
 import { Doctor } from './../doctors/doctor.entity';
-import {HospitalArgs} from './dto/hospital-args.dto';
 
 @Injectable()
 export class HospitalsService {
-  constructor(
-    @Inject('HospitalsRepository') private readonly hospitalsRepository: typeof Hospital) {}
+    constructor(
+        @Inject('HospitalsRepository') private readonly hospitalsRepository: typeof Hospital
+    ) {}
 
     async findAll(): Promise<Hospital[]> {
-        // const hospitals = await this.hospitalsRepository.findAll<Hospital>({
-        //     include: [Doctor],
-        // });
-        // return hospitals;
-        return await this.hospitalsRepository.findAll<Hospital>();
+        const hospitals = await this.hospitalsRepository.findAll<Hospital>({
+            include: [Doctor],
+        });
+        return hospitals;
     }
 
     async findOne(id: number): Promise<Hospital> {
-        const post = await this.hospitalsRepository.findByPk<Hospital>(id, {
+        const hospital = await this.hospitalsRepository.findByPk<Hospital>(id, {
             include: [Doctor],
         });
 
-        return post;
+        return hospital;
     }
 
-    async delete(): Promise<Hospital[]> {
-        return this.hospitalsRepository.findAll<Hospital>();
+    async delete(id: number): Promise<Hospital> {
+        const hospital = await this.findOne(id);
+        await hospital.destroy();
+        return hospital;
     }
 
     async create(createPostDto: CreateHospitalDto): Promise<Hospital> {
